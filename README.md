@@ -1,7 +1,3 @@
-Here’s a clean and concise **“How to Run / Use This App”** section for your GitHub README:
-
----
-
 ## 🚀 How to Run / Use This App
 
 ### 🔧 Option 1: Run Locally
@@ -29,20 +25,15 @@ Here’s a clean and concise **“How to Run / Use This App”** section for you
      * **EHR/EMR CSV:** Patient & diagnosis data
      * **Claims CSV:** Claims & billing data
 
-4. **Explore the App Features:**
-
-   * 📊 Interactive Dashboard
-   * 💻 Code Explorer
-   * 🧾 Claims Analyzer
-   * 🔄 Workflow Tracker
-   * 💡 Prompt-Based Insights (Ask questions like “costliest ICD in June 2024”)
+4. **Explore and Interact Freely:**
+   Use all built-in features to analyze data and extract insights.
 
 ---
 
 ### 🌐 Option 2: Use on Streamlit Cloud (No Setup)
 
 1. **Visit the App Online:**
-   👉 [Open App on Streamlit](https://your-streamlit-app-link-here)
+   👉 [Open App on Streamlit](https://hr-healthcare-analytics-dashboard.streamlit.app/)
 
 2. **Upload Required CSV Files:**
 
@@ -51,7 +42,3 @@ Here’s a clean and concise **“How to Run / Use This App”** section for you
 
 3. **Explore and Interact Freely:**
    Use all built-in features to analyze data and extract insights.
-
----
-
-Let me know if you'd like to include screenshots or badges!
