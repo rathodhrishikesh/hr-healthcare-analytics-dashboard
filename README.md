@@ -1,3 +1,16 @@
+### 📄 Project Overview
+
+This interactive Streamlit web app enables users to **analyze and visualize electronic health records (EHR)** and **medical claims data** with ease. Built for healthcare data enthusiasts and analysts, it allows you to:
+
+* Explore key health metrics and procedures via interactive dashboards
+* Investigate claim statuses, denials, and billing insights
+* Examine ICD/CPT codes, providers, and workflows across time
+* Gain actionable insights from synthetic or real-world data
+
+This tool helps you make sense of complex healthcare information — **fast, visually, and intelligently**.
+
+---
+
 ## 🚀 How to Run / Use This App
 
 ### 🔧 Option 1: Run Locally
