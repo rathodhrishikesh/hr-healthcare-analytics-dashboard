@@ -13,7 +13,7 @@ This tool helps you make sense of complex healthcare information — **fast, vis
 
 ## 🚀 How to Run / Use This App
 
-### 🔧 Option 1: Run Locally
+### 💻 Option 1: Run Locally
 
 1. **Generate Sample Data (Optional):**
    Run the following to create dummy EHR and Claims CSV files:
