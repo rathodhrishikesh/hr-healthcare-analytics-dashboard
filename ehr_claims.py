@@ -4,8 +4,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-st.set_page_config(page_title="Clinical Workflow Dashboard", layout="wide")
-st.title("🏥 Clinical Workflow Intelligence")
+st.set_page_config(page_title="HR Healthcare Analytics Dashboard", layout="wide")
+st.title("🏥 HR Healthcare Analytics Dashboard")
 
 ehr_file = st.file_uploader("📤 Upload EHR/EMR CSV", type="csv")
 claims_file = st.file_uploader("📤 Upload Claims CSV", type="csv")
