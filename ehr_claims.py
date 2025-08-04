@@ -82,12 +82,12 @@ if ehr_file and claims_file:
     prompt = st.text_input("Ask a question about claims or codes:")
 
     if prompt:
-        date_match = re.findall(r"\d{4}-\d{2}-\d{2}", prompt)
-        if len(date_match) == 2:
-            start_date, end_date = pd.to_datetime(date_match[0]), pd.to_datetime(date_match[1])
-            filtered_claims = claims[(claims["Service_Date"] >= start_date) & (claims["Service_Date"] <= end_date)]
-        else:
-            filtered_claims = claims
+        # date_match = re.findall(r"\d{4}-\d{2}-\d{2}", prompt)
+        # if len(date_match) == 2:
+            # start_date, end_date = pd.to_datetime(date_match[0]), pd.to_datetime(date_match[1])
+            # filtered_claims = claims[(claims["Service_Date"] >= start_date) & (claims["Service_Date"] <= end_date)]
+        # else:
+            # filtered_claims = claims
 
         if "costly" in prompt.lower():
             costly = filtered_claims.groupby("ICD_Code")["Billed_Amount"].sum().sort_values(ascending=False).head(5)
