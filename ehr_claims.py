@@ -78,27 +78,79 @@ if ehr_file and claims_file:
     # st.bar_chart(ehr.set_index("Patient_ID")[["Length_of_Stay", "Delay"]])
 
     ###### 5. Prompt-Based Insights (Optional) ######
+    # st.header("💡 Prompt-Based Insights")
+    # prompt = st.text_input("Ask a question about claims or codes:")
+
+    # if prompt:
+        # # date_match = re.findall(r"\d{4}-\d{2}-\d{2}", prompt)
+        # # if len(date_match) == 2:
+            # # start_date, end_date = pd.to_datetime(date_match[0]), pd.to_datetime(date_match[1])
+            # # filtered_claims = claims[(claims["Service_Date"] >= start_date) & (claims["Service_Date"] <= end_date)]
+        # # else:
+            # # filtered_claims = claims
+
+        # if "costly" in prompt.lower():
+            # costly = filtered_claims.groupby("ICD_Code")["Billed_Amount"].sum().sort_values(ascending=False).head(5)
+            # st.write("💸 Most Costly Diagnoses:")
+            # st.dataframe(costly)
+
+        # elif "denial" in prompt.lower():
+            # denial_df = filtered_claims[filtered_claims["Status"] == "Denied"]
+            # denial_rates = denial_df["CPT_Code"].value_counts().head(5)
+            # st.write("📉 CPT Codes with Highest Denial Rate:")
+            # st.dataframe(denial_rates)
+            
+            
+    ### HR PROMPT INSIGHTS
     st.header("💡 Prompt-Based Insights")
-    prompt = st.text_input("Ask a question about claims or codes:")
+    prompt = st.text_input("Ask a question about diagnoses, claim status, or search by patient, claim, ICD, or CPT codes:")
 
     if prompt:
-        # date_match = re.findall(r"\d{4}-\d{2}-\d{2}", prompt)
-        # if len(date_match) == 2:
-            # start_date, end_date = pd.to_datetime(date_match[0]), pd.to_datetime(date_match[1])
-            # filtered_claims = claims[(claims["Service_Date"] >= start_date) & (claims["Service_Date"] <= end_date)]
-        # else:
-            # filtered_claims = claims
+        prompt_lower = prompt.lower()
 
-        if "costly" in prompt.lower():
-            costly = filtered_claims.groupby("ICD_Code")["Billed_Amount"].sum().sort_values(ascending=False).head(5)
+        # 1. Most costly diagnoses
+        if "costly" in prompt_lower:
+            costly = filtered_claims.groupby("ICD_Code")["Billed_Amount"] \
+                .sum().sort_values(ascending=False).head(5)
             st.write("💸 Most Costly Diagnoses:")
-            st.dataframe(costly)
+            st.dataframe(costly.reset_index())
 
-        elif "denial" in prompt.lower():
+        # 2. CPT codes with highest denial rate
+        elif "denial" in prompt_lower:
             denial_df = filtered_claims[filtered_claims["Status"] == "Denied"]
             denial_rates = denial_df["CPT_Code"].value_counts().head(5)
-            st.write("📉 CPT Codes with Highest Denial Rate:")
-            st.dataframe(denial_rates)
+            st.write("📉 CPT Codes with Highest Denial Count:")
+            st.dataframe(denial_rates.reset_index().rename(columns={"index": "CPT_Code", "CPT_Code": "Denial_Count"}))
+
+        # Convert codes to string before checking
+        # 3. Search by CPT_Code
+        elif any(str(code) in prompt for code in filtered_claims["CPT_Code"].unique()):
+            codes = [str(code) for code in filtered_claims["CPT_Code"].unique() if str(code) in prompt]
+            matches = filtered_claims[filtered_claims["CPT_Code"].astype(str).isin(codes)]
+            st.write(f"🔍 All records with CPT Code(s): {codes}")
+            st.dataframe(matches)
+
+        # 4. Search by ICD_Code
+        elif any(str(code) in prompt for code in filtered_claims["ICD_Code"].unique()):
+            codes = [str(code) for code in filtered_claims["ICD_Code"].unique() if str(code) in prompt]
+            matches = filtered_claims[filtered_claims["ICD_Code"].astype(str).isin(codes)]
+            st.write(f"🔍 All records with ICD Code(s): {codes}")
+            st.dataframe(matches)
+
+        # 5. Search by Claim_ID or Patient_ID
+        else:
+            ids = [word for word in prompt.split() if word.isalnum()]
+            matches = filtered_claims[
+                filtered_claims["Claim_ID"].astype(str).isin(ids) |
+                filtered_claims["Patient_ID"].astype(str).isin(ids)
+            ]
+            if not matches.empty:
+                st.write("📄 Matching Claim or Patient Records:")
+                st.dataframe(matches)
+            else:
+                st.warning("No matching records found. Try refining your input.")
+
+
 
     ###### 6. Graphs ######
     import plotly.express as px
